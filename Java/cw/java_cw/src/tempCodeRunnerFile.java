@@ -1,0 +1,1 @@
+ // clickableLables.addMouseListener(new eventClick());
