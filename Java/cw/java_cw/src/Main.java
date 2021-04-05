@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class main implements ActionListener
+public class Main implements ActionListener
 {
     JFrame guiFrame = new JFrame(); // create a jFrame object
     ColorLabel clickableLables = new ColorLabel(50, 50, Color.green);
@@ -61,7 +60,7 @@ public class main implements ActionListener
     
     public static void main(String[] args)
     {
-        main run  = new main();
+        Main run  = new Main();
         run.createGUI();
     }   
     

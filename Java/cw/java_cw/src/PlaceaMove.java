@@ -2,11 +2,11 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-
 
 public class PlaceaMove extends JPanel 
 {
+    private static final long serialVersionUID = -681389960013782662L;
+ 
     Color drawColor; //= Color.GREEN; 
 	Color borderColor; //= Color.BLACK;
 	int borderSize = 1; 
@@ -26,20 +26,20 @@ public class PlaceaMove extends JPanel
         @Override
         public void mouseClicked(MouseEvent e)
         {
-            main.cnt++;
-        if (main.cnt%2 == 0)
+            Main.cnt++;
+        if (Main.cnt%2 == 0)
         {
             setBackground(Color.BLACK);
-            main.turnLabel.setText("White turn");
+            Main.turnLabel.setText("White turn");
         }
         else
         {
             setBackground(Color.white);
             
-            main.turnLabel.setText("Black turn");
+            Main.turnLabel.setText("Black turn");
         }
         // setBackground(changeColor());
-        System.out.println("cnt = " + main.cnt);
+        System.out.println("cnt = " + Main.cnt);
         }
     }
 
