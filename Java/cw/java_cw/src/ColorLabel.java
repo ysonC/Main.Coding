@@ -17,7 +17,7 @@ public class ColorLabel extends JLabel
 		Random rand = new Random();
 		//this.drawColor = new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
 		//this.drawColor = Color.BLACK;
-		setBackground(changeColor());
+		setBackground(drawColor);
 		addMouseListener(new event());
 	}
 

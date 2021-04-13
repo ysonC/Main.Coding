@@ -15,7 +15,6 @@ public class PlaceaMove extends JPanel
     {
         setBackground(Color.GREEN);
         setBorder(new LineBorder(Color.black));
-
         setMinimumSize( new Dimension(50, 50) );
 		setPreferredSize( new Dimension(50, 50) );
         addMouseListener(new event());
@@ -40,15 +39,15 @@ public class PlaceaMove extends JPanel
         }
         // setBackground(changeColor());
         System.out.println("cnt = " + Main.cnt);
-        }
     }
+}
 
-    public void paintComponent(Graphics g) 
-    {
-        super.paintComponent(g);
-        // g.setColor(Color.BLUE);
-        // g.fillOval(getInsets().left, getInsets().top, 10, 10);
-        System.out.println(this.getSize());
-        System.out.println(this.getX() + "  " + this.getY());
-    }
+    // public void paintComponent(Graphics g) 
+    // {
+    //     super.paintComponent(g);
+    //     g.setColor(Color.BLUE);
+    //     g.fillOval(getInsets().left, getInsets().top, 10, 10);
+    //     System.out.println(this.getSize());
+    //     System.out.println(this.getX() + "  " + this.getY());
+    // }
 }

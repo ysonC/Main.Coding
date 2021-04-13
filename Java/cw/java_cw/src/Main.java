@@ -7,14 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Main implements ActionListener
+public class Main extends JFrame implements ActionListener
 {
     JFrame guiFrame = new JFrame(); // create a jFrame object
-    ColorLabel clickableLables = new ColorLabel(50, 50, Color.green);
-    PlaceaMove panel = new PlaceaMove();
+    ColorLabel clickableLables = new ColorLabel(50, 50, Color.green); // ==> not working for now
+    ColorLabel greenLabel[] = new ColorLabel[64]; //== > testing
+    PlaceaMove panel = new PlaceaMove(); // working
     Random rand = new Random();
     JPanel mainPanel = new JPanel();
     JPanel gridPanel = new JPanel();
+    PanelListener listener = new PanelListener();
     JButton button1 = new JButton("Press");
     static JLabel turnLabel = new JLabel("White goes first");
     public static int cnt = 0;
@@ -46,9 +48,15 @@ public class Main implements ActionListener
 		{
             //ColorLabel clickableLables = new ColorLabel(50, 50, Color.green, 1, Color.BLACK);
             //gridPanel.add(clickableLables);
+  
             PlaceaMove panel = new PlaceaMove();
             gridPanel.add(panel);
-		}
+            
+            //greenLabel[i] = new ColorLabel(50, 50, Color.GREEN, 1, Color.BLACK);
+            //greenLabel[i].addMouseListener(listener);
+            //gridPanel.add(greenLabel[i]);
+
+        }
         
         
         button1.addActionListener(this);
@@ -63,26 +71,34 @@ public class Main implements ActionListener
         Main run  = new Main();
         run.createGUI();
     }   
-    
 
-    // public class event extends MouseAdapter
-    // {
-    //     @Override
-    //     public void mouseClicked(MouseEvent e)
-    //     {
-    //         cnt++;
-    //     if (cnt%2 == 0)
-    //     {
-    //         panel.setBackground(Color.white);
-    //         System.out.println("print white");
-    //     }
-    //     else
-    //         panel.setBackground(Color.black);
-    //     // setBackground(changeColor());
-    //     System.out.println("cnt = " + cnt);
-    //     }
+    public class PanelListener implements MouseListener
+    {
 
-    // }
+        @Override
+        public void mouseClicked(MouseEvent event) 
+        {
+            Object source = event.getSource();
+            if(source instanceof JLabel)
+            {
+                JLabel panelPressed = (JLabel) source;
+                panelPressed.setBackground(Color.blue);
+            }  
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent arg0) {}
+
+        @Override
+        public void mouseExited(MouseEvent arg0) {}
+
+        @Override
+        public void mousePressed(MouseEvent arg0) {}
+
+        @Override
+        public void mouseReleased(MouseEvent arg0) {}
+        
+    }
 
     @Override
 	public void actionPerformed(ActionEvent e)
@@ -91,6 +107,5 @@ public class Main implements ActionListener
 	    button1.setBackground( new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
         gridPanel.repaint();
 	}
-
 }
 
