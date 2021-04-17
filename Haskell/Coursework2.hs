@@ -1,0 +1,1 @@
+chomp :: String -> String

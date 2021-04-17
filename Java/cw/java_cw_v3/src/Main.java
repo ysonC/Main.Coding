@@ -137,5 +137,6 @@ public class Main extends JFrame implements ActionListener
 		//label.setText(label.getText()+".");
 	    button1.setBackground( new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
         gridPanel.repaint();
+        
 	}
 }
