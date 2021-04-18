@@ -1,21 +1,49 @@
+<!DOCTYPE html>
 <html>
 <head>
         <title>Blockbuster Entertainment Inc.</title>
         <LINK REL='stylesheet' TYPE='text/css' HREF='dbicw.css'>
-	<script type="text/javascript" src="dbicw.js"></script>
-
+	<script src="dbicw.js"></script>
+        <SCRIPT>
+                function validate(form) {
+                        var ok=1
+                        var msg=""
+                        for (var i = 0; i < form.length; i++) {
+                                if (form.elements[i].value.trim() == "") {
+                                        msg += "'" + form.elements[i].name + "' is void. "
+                                        ok=0
+                                }
+                        }
+                
+                        if (ok == 0) {
+                                alert(msg)
+                                return false
+                        }
+                        else {
+                                return true
+                        }
+                }
+        </SCRIPT>
 </head>
 <body>
 
-<h1>Search for a Movie by Title</h1>
+<h1>Search for a Movie</h1>
 
-<form action="search_movie_example.php"  onSubmit="return validate(this)">
-Movie title:<br>
- <input type="text" name="mvTitle">
- <br>
- <br>
- <input type="submit" value="Search">
+<form action="search_movie_example.php"  onSubmit= "return validate(this)">
+        Movie title:<br>
+        <input type="text" name="getTitle">
+        <br>
+        <br>
+        <input type="submit" value="Search">
 </form>
+
+<form action="search_actor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+         <input type="text" name="getActor">
+         <br>
+         <br>
+         <input type="submit" value="Search">
+        </form>
 
 </body>
 </html>

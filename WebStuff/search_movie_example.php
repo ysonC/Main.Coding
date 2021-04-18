@@ -7,7 +7,7 @@
 <h1>Movie Search Result</h1>
 
 <?php
-$titlesearch = $_GET['mvTitle'];
+$titlesearch = $_GET['getTitle'];
 $db_host = 'mysql.cs.nott.ac.uk';
 $db_user = 'efyhc5_COMP1004'; // change me
 $db_pass = '000222isa'; // change me
