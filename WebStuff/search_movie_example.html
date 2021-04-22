@@ -42,6 +42,16 @@
         <input type="submit" value="Search">
 </form>
 
+<form action="search_movie_byactor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+         <input type="text" name="getActor">
+         <br>
+         <br>
+         <input type="submit" value="Search">
+        </form>
+
+<h1>Search for a Actor</h1>
+
 <form action="search_actor.php"  onSubmit= "return validate(this)">
         Actor name:<br>
          <input type="text" name="getActor">
@@ -50,9 +60,19 @@
          <input type="submit" value="Search">
         </form>
 
-<h2>Add Movie with Actor</h2>
+<h1>Add Actor</h1>
 
-<form action="add_stuff.php"  onSubmit= "return validate(this)">
+<form action="add_actor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+                <input type="text" name="newActor">
+                <br>
+                <br>
+                <input type="submit" value="Add">
+        </form>
+
+<h2>Add Movie</h2>
+
+<form action="add_movie.php"  onSubmit= "return validate(this)">
         Actor name:<br>
         <input type="text" name="newActor">
         <br>

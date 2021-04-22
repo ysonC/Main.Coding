@@ -16,21 +16,23 @@ $db_name = 'efyhc5_COMP1004'; // change me
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if ($conn->connect_errno)  die("failed to connect to database\n</body>\n</html>"); 
 
-$sql = "SELECT actID, actName FROM Actor where actname = '$actorsearch'";
+$sql="SELECT mvID, mvTitle, mvPrice, mvYear, mvGenre FROM Movie WHERE actID= ( SELECT actID FROM Actor Where actName = '$actorsearch')";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
-$stmt->bind_result($ID, $Name);
-
+$stmt->bind_result($ID, $Title, $Price, $Year, $Genre );
 ?>
 
 <table width="750" border="1" cellpadding="1" cellspacing="1">
-<tr> <th>ID</th> <th>Name</th> </tr>
+<tr> <th>ID</th> <th>Title</th> <th>Price</th> <th>Year</th> <th>Genre</th> </tr>
 
 <?php
 while($stmt->fetch()){
   echo "<tr>";
   echo "<td>". htmlentities($ID) ."</td>";
-  echo "<td>". htmlentities($Name) ."</td>";
+  echo "<td>". htmlentities($Title) ."</td>";
+  echo "<td>". htmlentities($Price) ."</td>";
+  echo "<td>". htmlentities($Year) ."</td>";
+  echo "<td>". htmlentities($Genre) ."</td>";
   echo "</tr>";
 }
 ?>

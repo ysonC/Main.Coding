@@ -21,7 +21,6 @@ $db_name = 'efyhc5_COMP1004'; // change me
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if ($conn->connect_errno)  die("failed to connect to database\n</body>\n</html>"); 
 
-$conn->query("INSERT into Actor (actID, actName) VALUES (0,'$addActor');");
 $conn->query("INSERT into Movie (actID, mvTitle, mvPrice, mvYear, mvGenre) 
                 Values 
                     ((SELECT actID from Actor where actName = '$addActor'), '$addMovie', $addPrice, $addYear, '$addGenre');");
