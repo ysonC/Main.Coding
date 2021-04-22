@@ -5,24 +5,29 @@
         <LINK REL='stylesheet' TYPE='text/css' HREF='dbicw.css'>
 	<script src="dbicw.js"></script>
         <SCRIPT>
-                function validate(form) {
-                        var ok=1
-                        var msg=""
-                        for (var i = 0; i < form.length; i++) {
-                                if (form.elements[i].value.trim() == "") {
-                                        msg += "'" + form.elements[i].name + "' is void. "
-                                        ok=0
-                                }
-                        }
-                
-                        if (ok == 0) {
-                                alert(msg)
-                                return false
-                        }
-                        else {
-                                return true
+        function validate(form) 
+        {
+                var ok=1
+                var msg=""
+                for (var i = 0; i < form.length; i++) 
+                {
+                        if (form.elements[i].value.trim() == "") 
+                        {
+                                msg += "'" + form.elements[i].name + "' is void. "
+                                ok=0
                         }
                 }
+        
+                if (ok == 0) 
+                {
+                        alert(msg)
+                        return false
+                }
+                else 
+                {
+                        return true
+                }
+        }
         </SCRIPT>
 </head>
 <body>
@@ -45,6 +50,49 @@
          <input type="submit" value="Search">
         </form>
 
+<h2>Add Movie with Actor</h2>
+
+<form action="add_stuff.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+        <input type="text" name="newActor">
+        <br>
+        <br>
+        Movie name:<br>
+        <input type="text" name="newMovie">
+        <br>
+        <br>
+        Movie price:<br>
+        <input type="text" name="newPrice">
+        <br>
+        <br>
+        Movie year:<br>
+        <input type="text" name="newYear">
+        <br>
+        <br>
+        Movie genre:<br>
+        <input type="text" name="newGenre">
+        <br>
+        <br>
+        <input type="submit" value="Add">
+        </form>      
+
+<h2>Delete Movie</h2>
+<form action="delete_movie.php"  onSubmit= "return validate(this)">
+        Movie name:<br>
+         <input type="text" name="noMovie">
+         <br>
+         <br>
+         <input type="submit" value="Remove">
+        </form>
+
+<h2>Delete Actor</h2>
+<form action="delete_actor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+         <input type="text" name="noActor">
+         <br>
+         <br>
+         <input type="submit" value="Remove">
+        </form>
 </body>
 </html>
 
