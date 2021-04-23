@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Blockbuster Entertainment Inc.</title>
+        <LINK REL='stylesheet' TYPE='text/css' HREF='dbicw.css'>
+	<script src="dbicw.js"></script>
+	<script>
+			function validate(form) {
+				var ok=1
+				var msg=""
+				for (var i = 0; i < form.length; i++) {
+					if (form.elements[i].value.trim() == "") {
+						msg += "'" + form.elements[i].name + "' is void. "
+						ok=0
+					}
+				}
+			
+				if (ok == 0) {
+					alert(msg)
+					return false
+				}
+				else {
+					return true
+				}
+			}
+		</script>
+</head>
+<body>
+
+<h1>Show all</h1>
+<form action="show_movie.php"  onSubmit= "return validate(this)">
+        <input type="submit" value="Show Movies">
+        <br>
+</form>
+<form action="show_actor.php"  onSubmit= "return validate(this)">
+        <br>
+        <input type="submit" value="Show Actors">
+        <br>
+</form>
+
+<h1>Search for a Movie</h1>
+
+<form action="search_movie_example.php"  onSubmit="return validate(this)">
+        Movie title:<br>
+        <input type="text" name="getTitle">
+        <br>
+        <br>
+        <input type="submit" value="Search">
+</form>
+
+<form action="search_movie_byactor.php"  onSubmit="return validate(this)">
+        Actor name:<br>
+         <input type="text" name="getActor">
+         <br>
+         <br>
+         <input type="submit" value="Search">
+        </form>
+
+<h1>Search for a Actor</h1>
+
+<form action="search_actor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+         <input type="text" name="getActor">
+         <br>
+         <br>
+         <input type="submit" value="Search">
+        </form>
+
+
+<h1>Add Actor</h1>
+
+<form action="add_actor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+                <input type="text" name="newActor">
+                <br>
+                <br>
+                <input type="submit" value="Add">
+        </form>
+
+
+<h2>Add Movie</h2>
+
+<form action="add_movie.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+        <input type="text" name="newActor">
+        <br>
+        <br>
+        Movie name:<br>
+        <input type="text" name="newMovie">
+        <br>
+        <br>
+        Movie price:<br>
+        <input type="text" name="newPrice">
+        <br>
+        <br>
+        Movie year:<br>
+        <input type="text" name="newYear">
+        <br>
+        <br>
+        Movie genre:<br>
+        <input type="text" name="newGenre">
+        <br>
+        <br>
+        <input type="submit" value="Add">
+        
+        </form>      
+
+<h2>Delete Movie</h2>
+<form action="delete_movie.php"  onSubmit= "return validate(this)">
+        Movie name:<br>
+         <input type="text" name="noMovie">
+         <br>
+         <br>
+         <input type="submit" value="Remove">
+        </form>
+
+<h2>Delete Actor</h2>
+<form action="delete_actor.php"  onSubmit= "return validate(this)">
+        Actor name:<br>
+         <input type="text" name="noActor">
+         <br>
+         <br>
+         <input type="submit" value="Remove">
+        </form>
+
+</body>
+</html>
+
+
+
+
