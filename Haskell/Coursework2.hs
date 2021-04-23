@@ -8,29 +8,28 @@ runs :: String -> [String]
 runs "" = []
 runs str = extract str [] where
     extract str xs
-        |   length str == 0 = xs
-        |   otherwise = extract (drop (length (munch str)) str) (xs ++ [(munch str)])
+        |   null str = xs
+        |   otherwise = extract (drop (length (munch str)) str) (xs ++ [munch str])
 
 encode :: String -> [(Char,Int)]
 encode [] = []
-encode str  = ((x !! 0),(length x)):(encode (drop (length x) (str)))
+encode str  = (head x,length x):encode (drop (length x) str)
     where (x:xs) = runs str
 
 flatten :: [(Char,Int)] -> String
 flatten [] = []
-flatten (x:xs) = (fst x):(show (snd x) ++ flatten xs)
+flatten (x:xs) = fst x:(show (snd x) ++ flatten xs)
 
 compress [] = []
 compress str = flatten (encode str)
 
 decode :: [(Char,Int)] -> String
-decode [] = []
-decode (x:xs) = ((take (snd x) (repeat (fst x)))) ++ decode xs
+decode = foldr (\ x -> (++) (replicate (snd x) (fst x))) []
 
 expand :: String -> [(Char,Int)]
 expand [] = []
 expand [x] = []
-expand (x:y:xs) = (x,(fromEnum y - fromEnum '0')):(expand xs)
+expand (x:y:xs) = (x,fromEnum y - fromEnum '0'):expand xs
 
 decompress :: String -> String
 decompress [] = []
