@@ -13,11 +13,9 @@ int main()
     {
         cin >> input[i];
     }
-
     lvl = log2(length+1) -1;
     int max = pow(2,lvl + 1);
     //cout << "lvl = " << lvl << endl;
-
     for (int i = 1; i < max; i*=2) // i = 1, 2, 4
     {
         int number = pow(2,lvl);
@@ -41,7 +39,11 @@ int main()
     }
     for (int i = 1; i <= length; i++)
     {
-       cout << stored[i] << " ";
+        if (i == length) 
+        {
+            cout << stored[i] << "\n";
+            break;
+        }
+        cout << stored[i] << " ";
     }
-    cout << "\n";
 }
