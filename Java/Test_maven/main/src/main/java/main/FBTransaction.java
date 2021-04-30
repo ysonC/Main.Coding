@@ -1,16 +1,13 @@
+package main;
+
 import java.math.BigDecimal;
 import java.util.Date;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
-
 
 public class FBTransaction {
 	private String transactionName;
 	private BigDecimal transactionValue;
 	private int transactionCategory;
 	private Date transactionTime;
-
 
 	public FBTransaction() {
 		transactionName = null;
@@ -25,6 +22,8 @@ public class FBTransaction {
 		transactionCategory = tCat;
 		transactionTime = new Date();
 	}
+
+
 
 	public String transactionName() {
 		return transactionName;
@@ -67,11 +66,14 @@ public class FBTransaction {
 			transactionTime = tTime;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return transactionName + " - £" + transactionValue.toString();
 	}
-	
-	
+
+	public Object FBTransaction() {
+		return null;
+	}
+
 }

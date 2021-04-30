@@ -1,4 +1,5 @@
 #include<iostream>
+#include<iomanip>
 #include<math.h>
 using namespace std;
 // 42 == *
@@ -80,9 +81,11 @@ int main()
             j++;
             continue;
         }
-        cout.setf(ios::fixed,ios::floatfield);
-        cout.precision(3);
-        cout << numb[j];
+        cout<<fixed<<setprecision(3)<<numb[j];
+
+        // cout.setf(ios::fixed,ios::floatfield);//???
+        // cout.precision(3);/4*2+13
+        // cout << numb[j];
         break;
     }
 }

@@ -1,25 +1,39 @@
 package main;
 
-    import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
-    import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
+    // static private FBTransaction testing;
+
+    // @BeforeAll
+    // static void test_setup()
+    // {
+    //     testing = new FBTransaction();
+    // }
+
+
     @Test
-    public void shouldAnswerWithTrue()
+    public void test_transaction()
     {
-        assertTrue( false );
+        FBTransaction testing = new FBTransaction();
+        assertNotNull(testing.transactionTime());
+        assertSame(testing.transactionTime(),testing.transactionTime());
     }
+
     @Test
-    public void addtest()
+    public void test_setTransactionName()
     {
-        assertTrue(App.add(2,3));
+        FBTransaction testing = new FBTransaction();
+        
+    }
+
+    @Test
+    public void test_setTransactionValue()
+    {
+
     }
 }
