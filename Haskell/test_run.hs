@@ -9,8 +9,8 @@ perfect n = sum (init (factors n)) == n
 perfects :: Int -> [Int]
 perfects n = [x | x <- [1..n], perfect x]
 
-fac :: Int -> Int 
-fac n = product [1..n]
+--fac :: Int -> Int 
+--fac n = product [1..n]
 
 replicate1 :: Int -> a-> [a]
 replicate1 0 x = []
@@ -35,8 +35,8 @@ merge (x:xs) (y:ys) = if x <= y then
                         else
                             y : merge (x:xs) ys
 
--- msort :: [Int] -> [Int]
--- msort [] = []
--- msort [x] = [x]
--- msort xs = merge (msort ys) (msort zs)
---             where (ys,zs) = halve xs
+fac::Integer->Integer
+fac 0 = 1 
+fac n
+    |n < 0 = n*fac(n+1)
+    |n > 0 = n*fac(n-1)
