@@ -140,7 +140,7 @@ public class FBApp {
 
 
     private static void AddCategory(Scanner in) {
-        System.out.println("What is the title of the category?");
+		System.out.println("What is the title of the category?");
         in.nextLine(); // to remove read-in bug
         String title = in.nextLine();
         System.out.println("What is the budget for this category?");
@@ -151,5 +151,4 @@ public class FBApp {
         System.out.println("[Category added]");
         CategoryOverview();
     }
-
 }
