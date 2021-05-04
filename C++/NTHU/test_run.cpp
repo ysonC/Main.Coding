@@ -12,7 +12,7 @@ void find (string input, string key, int start, int j)
 {
     if (start < input.length())
     {
-        cout << start << endl;
+        //cout << start << endl;
         for(int i = start; i < input.length(); i ++)
         {
             if (j == key.length() - 1)
@@ -21,7 +21,8 @@ void find (string input, string key, int start, int j)
             }
             if(input[i] == key[j])
             {
-                start++;
+                cout << key[j] << " ";
+                start = i;
                 j++;
                 find(input, key, start,j);
             }
