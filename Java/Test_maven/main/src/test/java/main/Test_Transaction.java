@@ -4,11 +4,70 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 
 
-public class AppTest 
+public class Test_Transaction 
 {    
+
+    static private FBTransaction testingDefault;
+	static private FBTransaction testingMain;	
+	static private String testName;
+	static private BigDecimal testValue;
+	static private int testCategory;
+	
+	@BeforeAll
+	public static void testsetup() {	
+		testingDefault = new FBTransaction();
+		testName = "name";
+		testValue = new BigDecimal("84.50");
+		testCategory = 1;
+		testingMain = new FBTransaction(testName, testValue, testCategory);
+	}
+
+	@Test
+	public void test_defaultConstructor() {
+		assertEquals(0,testingDefault.transactionCategory);	
+		assertEquals("[Pending transaction]",testingDefault.transactionName);
+		assertNull(testingDefault.transactionValue);
+		assertNotNull(testingDefault.transactionTime);
+	}
+	
+	@Test 
+	public void test_mainConstructor() {
+		assertEquals(testName, testingMain.transactionName);
+		assertEquals(testValue, testingMain.transactionValue);
+		assertEquals(testCategory, testingMain.transactionCategory);
+	}
+	
+	@Test
+	public void test_transactionName() {
+		String givenName = testingMain.transactionName();
+		assertEquals(testName, givenName);
+	}
+
+	@Test
+	public void test_transactionValue() {
+		BigDecimal givenValue = testingMain.transactionValue();
+		assertSame(testValue, givenValue);
+        System.out.println(testValue);
+        System.out.println(givenValue);
+        System.out.println("Hello");
+        
+	}
+
+	@Test
+	public void test_transactionCategory() {
+		int givenCategory = testingMain.transactionCategory();
+		assertEquals(testCategory, givenCategory);
+	}
+	
+	@Test 
+	public void test_transactionTime() {
+		assertSame(testingMain.transactionTime, testingMain.transactionTime());
+	}
+	
     @Test
     public void test_transaction()
     {

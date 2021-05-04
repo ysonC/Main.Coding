@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class FBTransaction {
-	private String transactionName;
-	private BigDecimal transactionValue;
-	private int transactionCategory;
-	private Date transactionTime;
+	String transactionName;
+	BigDecimal transactionValue;
+	int transactionCategory;
+	Date transactionTime;
 
 	public FBTransaction() {
 		transactionName = null;
