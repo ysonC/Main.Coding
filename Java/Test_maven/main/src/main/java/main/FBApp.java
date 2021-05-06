@@ -17,7 +17,9 @@ public class FBApp {
 
 
 		// SETUP EXAMPLE DATA //
-		UserCategories.add(new FBCategory("Unknown"));
+		FBCategory UnKnownCategory = new FBCategory("Unknown"); // Create an object for unknown
+		UserCategories.add(UnKnownCategory);
+		//UserCategories.add(new FBCategory("Unknown"));
 		FBCategory BillsCategory = new FBCategory("Bills");
 		BillsCategory.setCategoryBudget(new BigDecimal("120.00"));
 		UserCategories.add(BillsCategory);
@@ -62,9 +64,9 @@ public class FBApp {
 				} else if (s.equals("O")) {
 					CategoryOverview();
 				} else if (s.equals("C")) {
-					ChangeTransactionCategory(in);
+					ChangeTransactionCategory();// delete (in)
 				} else if (s.equals("N")) {
-					AddCategory(in);
+					AddCategory(); // deleted (in)
 				} else if (s.equals("A")) {
 					AddTransaction(in);
 				} else if (s.equals("X")) {
@@ -121,28 +123,39 @@ public class FBApp {
         UserTransactions.add(new FBTransaction(title,tvalue,0));
         System.out.println("[Transaction added]");
     }
-
-    static void ChangeTransactionCategory(Scanner in) { //Added: Display the new updated Category
-    	System.out.println("Which transaction ID?");
-    	in.nextLine();
+	
+		//Added: 
+		//Display the new updated Category (done)
+		//add remove expense from original Category (not done)
+   	static void ChangeTransactionCategory() { 		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Which transaction ID?");
+    	//in.nextLine();
     	int tID = Integer.parseInt(in.nextLine())-1; // (-1) at the start
     	System.out.println("\t- "+UserTransactions.get(tID).toString()); // (correct) remove (-1) and move to the start
     	System.out.println("Which category will it move to?");
     	CategoryOverview();
     	int newCat = Integer.parseInt(in.nextLine())-1; // (fixed) (wrong) should (-1) to ge the correct thing
 		FBTransaction temp = UserTransactions.get(tID);// (fixed) (wrong) should (-1) 
+		
+		//Add remove expense
+		BigDecimal tmp;
+		tmp = UserTransactions.get(tID).transactionValue(); // the amount to remove
+		UserCategories.get(temp.transactionCategory()).removeExpense(tmp);
+
     	temp.setTransactionCategory(newCat);
     	UserTransactions.set(tID, temp);
     	FBCategory temp2 = UserCategories.get(newCat);
     	temp2.addExpense(temp.transactionValue());
     	UserCategories.set(newCat, temp2);
 		System.out.println("\t- "+UserCategories.get(newCat).toString());
-    }
+	}
 
 
-    static void AddCategory(Scanner in) {
+    static void AddCategory() {
+		Scanner in = new Scanner(System.in);
 		System.out.println("What is the title of the category?");
-        in.nextLine(); // to remove read-in bug
+        //in.nextLine(); // to remove read-in bug
         String title = in.nextLine();
         System.out.println("What is the budget for this category?");
         BigDecimal cbudget = new BigDecimal(in.nextLine());
@@ -152,9 +165,4 @@ public class FBApp {
         System.out.println("[Category added]");
         CategoryOverview();
     }
-
-	public static void TestFunc()
-	{
-		System.out.println("Test success!!");
-	}
 }

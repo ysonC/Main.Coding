@@ -1,0 +1,6 @@
+ChangeTransaction() :: Check ::
+1. check the right thing is move
+2. check if move to correct location
+3. check if object have left the original category to new category
+4. check the total remainning of the original and new category
+
