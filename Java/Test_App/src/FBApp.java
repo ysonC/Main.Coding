@@ -1,5 +1,3 @@
-package main;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -112,7 +110,7 @@ public class FBApp {
 		}
 	}
 
-    static void AddTransaction(Scanner in) {
+    private static void AddTransaction(Scanner in) {
         System.out.println("What is the title of the transaction?");
         in.nextLine(); // to remove read-in bug
         String title = in.nextLine();
@@ -122,21 +120,20 @@ public class FBApp {
         System.out.println("[Transaction added]");
     }
 
-    static void ChangeTransactionCategory(Scanner in) { //Added: Display the new updated Category
+    static void ChangeTransactionCategory(Scanner in) {
     	System.out.println("Which transaction ID?");
     	in.nextLine();
-    	int tID = Integer.parseInt(in.nextLine())-1; // (-1) at the start
-    	System.out.println("\t- "+UserTransactions.get(tID).toString()); // (correct) remove (-1) and move to the start
+    	int tID = Integer.parseInt(in.nextLine());
+    	System.out.println("\t- "+UserTransactions.get(tID-1).toString());
     	System.out.println("Which category will it move to?");
     	CategoryOverview();
-    	int newCat = Integer.parseInt(in.nextLine())-1; // (fixed) (wrong) should (-1) to ge the correct thing
-		FBTransaction temp = UserTransactions.get(tID);// (fixed) (wrong) should (-1) 
+    	int newCat = Integer.parseInt(in.nextLine());
+    	FBTransaction temp = UserTransactions.get(tID);
     	temp.setTransactionCategory(newCat);
     	UserTransactions.set(tID, temp);
     	FBCategory temp2 = UserCategories.get(newCat);
     	temp2.addExpense(temp.transactionValue());
     	UserCategories.set(newCat, temp2);
-		System.out.println("\t- "+UserCategories.get(newCat).toString());
     }
 
 
@@ -152,9 +149,4 @@ public class FBApp {
         System.out.println("[Category added]");
         CategoryOverview();
     }
-
-	public static void TestFunc()
-	{
-		System.out.println("Test success!!");
-	}
 }

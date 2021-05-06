@@ -77,8 +77,7 @@ int main()
     while(tmp--)
     {
         cin >> nub;
-        store[i] = run(nub);
-        i++;
+        store[i++] = run(nub);
     }
     for(int i = 0; i < numberOfTestCase; i++)
     {

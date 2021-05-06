@@ -1,45 +1,18 @@
-package main;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Date;
-import org.junit.Test;
-import org.junit.experimental.categories.Categories;
-import org.junit.jupiter.api.BeforeAll;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
+import org.junit.jupiter.api.Test;
 
-public class Test_App extends FBApp
-{	
+class Test_FBApp extends FBApp
+{
 
-	@BeforeAll
-	public static void testsetup() 
-	{
-		System.out.println("Hello");
-		
-	}
 	
-    @Test
-    public void test_ChangeTransactionCategory()
-    {
-		FBApp testing = new FBApp();
-		System.out.println("Hello");
-		assertTrue(true);
-		Scanner in = new Scanner("1");
-		ListTransactionsForCategory(1);
-	}
-
 	@Test
-	public void test_AddCategory()
-	{
-		Scanner in = new Scanner(System.in);
-		FBApp.AddCategory(in);
-	}
-
-	@Test
-	public void test_run()
+	void testChangeTransactionCategory() 
 	{
 		// SETUP EXAMPLE DATA //
 		UserCategories = new ArrayList<FBCategory>();
@@ -66,8 +39,17 @@ public class Test_App extends FBApp
 		FBApp.CategoryOverview();
 		FBApp.ListTransactions();
 		Scanner in = new Scanner(System.in);
-
 		FBApp.ChangeTransactionCategory(in);
+		FBApp.CategoryOverview();
+		FBApp.ListTransactions();
+		
 		
 	}
+
+	@Test
+	void testAddCategory() 
+	{
+		
+	}
+
 }

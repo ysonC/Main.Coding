@@ -8,24 +8,13 @@ using namespace std;
 
 int start = 0;
 int cnt_final = 0;
-void find (string input, string key, int start, int j)
+void find (string input, string key)
 {
-    if (start < input.length())
+    for(int i = 0, j = 0; i < input.length(); i++)
     {
-        //cout << start << endl;
-        for(int i = start; i < input.length(); i ++)
+        if(input[i] == key[j])
         {
-            if (j == key.length() - 1)
-            {
-                cnt_final++;
-            }
-            if(input[i] == key[j])
-            {
-                cout << key[j] << " ";
-                start = i;
-                j++;
-                find(input, key, start,j);
-            }
+            
         }
     }
 }
@@ -34,7 +23,7 @@ int main()
 {
     string input, key;
     cin >> input >> key;
-    int j = 0;
-    find(input, key, start,j);
+
+    find(input, key);
     cout << cnt_final << endl;
 }
