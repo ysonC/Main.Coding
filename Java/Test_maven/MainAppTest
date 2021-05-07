@@ -4,3 +4,8 @@ ChangeTransaction() :: Check ::
 3. check if object have left the original category to new category
 4. check the total remainning of the original and new category
 
+AddCategory() :: Check ::
+1. check if added to the correct category (the last one + 1)
+2. check if title is correct
+3. check if budget is correct
+4. check for object is same

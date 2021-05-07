@@ -127,6 +127,7 @@ public class FBApp {
 		//Added: 
 		//Display the new updated Category (done)
 		//add remove expense from original Category (not done)
+		//new confirmation mark
    	static void ChangeTransactionCategory() { 		
 		Scanner in = new Scanner(System.in);
 		System.out.println("Which transaction ID?");
@@ -136,22 +137,29 @@ public class FBApp {
     	System.out.println("Which category will it move to?");
     	CategoryOverview();
     	int newCat = Integer.parseInt(in.nextLine())-1; // (fixed) (wrong) should (-1) to ge the correct thing
-		FBTransaction temp = UserTransactions.get(tID);// (fixed) (wrong) should (-1) 
+		FBTransaction temp = UserTransactions.get(tID);// (fixed) (wrong) should (-1)
 		
 		//Add remove expense
 		BigDecimal tmp;
 		tmp = UserTransactions.get(tID).transactionValue(); // the amount to remove
 		UserCategories.get(temp.transactionCategory()).removeExpense(tmp);
+		FBCategory oldPrintOb = UserCategories.get(temp.transactionCategory());//for printing old category
+		String oldPrint = oldPrintOb.toString();
+
 
     	temp.setTransactionCategory(newCat);
     	UserTransactions.set(tID, temp);
     	FBCategory temp2 = UserCategories.get(newCat);
     	temp2.addExpense(temp.transactionValue());
     	UserCategories.set(newCat, temp2);
-		System.out.println("\t- "+UserCategories.get(newCat).toString());
+		//System.out.println("\t- "+UserCategories.get(newCat).toString());
+		System.out.println("\n[Transaction changed]");
+		System.out.println("Move from - " + oldPrint);
+		System.out.println("Move to   - " + UserCategories.get(newCat).toString().toString());
 	}
 
-
+		//Added:
+		//Comfirmation stating which category and budget
     static void AddCategory() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("What is the title of the category?");
@@ -162,7 +170,7 @@ public class FBApp {
         FBCategory temp = new FBCategory(title);
         temp.setCategoryBudget(cbudget);
         UserCategories.add(temp);
-        System.out.println("[Category added]");
         CategoryOverview();
+        System.out.println("\n[Category added]" + " - " + temp.toString());
     }
 }
