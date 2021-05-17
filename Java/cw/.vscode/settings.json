@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "java_cw_v3/src"
+        "java_cw_v3/src",
+        "java_cw_v4/CW2/src"
     ]
 }

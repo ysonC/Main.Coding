@@ -31,6 +31,21 @@ public class Test_App extends FBApp
         System.setOut(originalOut);
     }
 	
+
+	@Test
+	public void MainMethod_A_Test() 
+	{
+		String userInput = String.format("A\nTesco\n7.99"); // 
+	    ByteArrayInputStream InContent = new ByteArrayInputStream(userInput.getBytes());
+	    System.setIn(InContent);
+	    FBApp.main(null);
+	    String[] lines = outContent.toString().split(System.lineSeparator());
+	    
+		String actualOutput = lines[lines.length];
+	    assertEquals("[Transaction added]", actualOutput);
+		System.out.println("actualOutput");
+	}
+
 	@Test
 	public void test_ChangeTransactionCategory()
 	{
