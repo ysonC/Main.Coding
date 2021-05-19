@@ -15,12 +15,12 @@ public class Main extends JFrame implements ActionListener
     JPanel mainPanel = new JPanel();
     JPanel gridPanel = new JPanel();
     Random rand = new Random();
-    JButton button1 = new JButton("Press");
+    JButton button1 = new JButton("Make a move for me.");
     JLabel turnLabel = new JLabel("White goes first");
 
     int flag = 1; // start from white
     int white = 1 , black = 0; 
-    Pieces moves[] = new Pieces[64];
+    Pieces moves[][] = new Pieces[100][100];
 
     public void createGUI()
     {
@@ -42,35 +42,46 @@ public class Main extends JFrame implements ActionListener
 
         mainPanel.add(gridPanel);        
         
-        for(int i = 0; i< 64; i++)
-        {
-            Boolean starter = true;
-            //(28 37) (29 36) 
-            
-            if(i == 28 || i == 35)
+        Boolean starter = true;
+        for (int i = 0; i < 10; i++)
+        {       
+            for (int j = 0; j < 10; j++)
             {
-                moves[i] = new Pieces(starter);
-                moves[i].setBackground(Color.BLACK);
-                moves[i].setPreferredSize(new Dimension(60, 60));
-                gridPanel.add(moves[i]);
-            }
-            else if(i == 27 || i == 36)
-            {
-                moves[i] = new Pieces(starter);
-                moves[i].setBackground(Color.WHITE);
-                moves[i].setPreferredSize(new Dimension(60, 60));
-                gridPanel.add(moves[i]);
-            }
-            else 
-            {
-                moves[i] = new Pieces();
-                moves[i].setBackground(Color.GREEN);
-                moves[i].setPreferredSize(new Dimension(60, 60));
-                gridPanel.add(moves[i]);
-            }
-            
-        }
+                if (i == 0 || i == 9 || j == 9 || j == 0)
+                {
+                    moves[i][j] = new Pieces();
+                    moves[i][j].setColor(Color.GREEN);
+                    moves[i][j].setPreferredSize(new Dimension(60,60));
+                    moves[i][j].storeArray(i, j);
+                }
 
+                else if ((i == 4 && j == 4) || (i == 5 && j == 5))
+                {
+                    moves[i][j] = new Pieces(starter);
+                    moves[i][j].setColor(Color.WHITE);
+                    moves[i][j].setPreferredSize(new Dimension(60,60));
+                    moves[i][j].storeArray(i, j);
+                    gridPanel.add(moves[i][j]);
+                }
+                else if ((i == 4 && j == 5) || (i == 5 && j == 4))
+                {
+                    moves[i][j] = new Pieces(starter);
+                    moves[i][j].setColor(Color.BLACK);
+                    moves[i][j].setPreferredSize(new Dimension(60,60));
+                    moves[i][j].storeArray(i, j);
+                    gridPanel.add(moves[i][j]);
+                }
+                else
+                {
+                    moves[i][j] = new Pieces();
+                    moves[i][j].setColor(Color.GREEN);
+                    moves[i][j].setBackground(Color.GREEN);
+                    moves[i][j].setPreferredSize(new Dimension(60,60));
+                    moves[i][j].storeArray(i, j);
+                    gridPanel.add(moves[i][j]);
+                }
+            }
+        }
         
         button1.addActionListener(this);
         guiFrame.repaint();
@@ -82,12 +93,16 @@ public class Main extends JFrame implements ActionListener
 
     public class Pieces extends JButton implements ActionListener 
     {
-        Color drawColor;
         boolean first_time = true;
+        boolean lock = false;
+        Color color;
+        int row, column;
         
         public Pieces()
         {
             addActionListener(this);
+            color = Color.GREEN;
+            lock = false;
         }
 
         public Pieces(Boolean garbage)
@@ -96,6 +111,39 @@ public class Main extends JFrame implements ActionListener
             first_time = false;
         }
 
+        public void lockPiece()
+        {
+            lock = true;
+        }
+        public boolean getLock()
+        {
+            return lock;
+        }
+
+        public void storeArray(int setRow, int setColumn)
+        {
+            row = setRow;
+            column = setColumn;
+        }
+
+        public String getArray()
+        {
+            String tmp = (row + ", " + column);
+            return tmp;
+        }
+
+        public void setColor(Color setTo)
+        {
+            color = setTo;
+            setBackground(setTo);
+        }
+
+        public Color getColor()
+        {
+            return color;
+        }
+
+
         public void makeMove()
         {
             if (first_time)
@@ -103,23 +151,111 @@ public class Main extends JFrame implements ActionListener
                 first_time = false;
                 if(flag == white)
                 {
-                    setBackground(Color.BLACK);
-                    turnLabel.setText("White Turn");
+                    setColor(Color.WHITE);
+                    turnLabel.setText("Black Turn");
                     flag = black;
                 }
                 else 
                 {
-                    setBackground(Color.WHITE);
-                    turnLabel.setText("Black Turn");
+                    setColor(Color.BLACK);
+                    turnLabel.setText("White Turn");
                     flag = white;
                 }
             }
         }
 
+        public boolean besideOne()
+        {
+            int cnt =0;
+            if (moves[row][column+1].getColor() == Color.GREEN)
+                cnt++;
+            if (moves[row][column-1].getColor() == Color.GREEN)
+                cnt++;
+            if (moves[row+1][column].getColor() == Color.GREEN)
+                cnt++;
+            if (moves[row-1][column].getColor() == Color.GREEN)
+                cnt++;
+            
+            System.out.println("cnt = " + cnt);
+            if (cnt < 4 )return true;
+            else return false;
+        }
+
+        public boolean moveAble(Color tmp)
+        {
+            int noSame = 0;
+
+            if(tmp == moves[row][column+1].getColor())
+                noSame++;
+            if (tmp == moves[row][column-1].getColor())
+                noSame++;
+            if (tmp == moves[row+1][column].getColor())
+                noSame++;
+            if (tmp == moves[row-1][column].getColor())
+                noSame++;
+
+            if (noSame > 0) return false; 
+
+            else return true;
+        }
+
         public void actionPerformed(ActionEvent e)
         {
-            makeMove();
-            System.out.println(e.getSource());
+            Color tmp = null;
+            if (flag == white) tmp = Color.WHITE;
+            else if (flag == black) tmp = Color.BLACK;
+
+            if (moveAble(tmp) && besideOne()) 
+            {
+                makeMove();
+                findSameColor();     
+            }
+            System.out.println("current color : " + this.getColor());            
+            System.out.println(getArray());
+
+        }
+
+        public void findSameColor()
+        {
+            for(int i = 1; i < column ; i++) // horizontal(left to right)
+            {   
+                if(moves[row][i].getColor() == this.getColor())
+                {
+                    moves[row][i+1].setColor(this.getColor());
+                    System.out.println("left to right");
+                }
+                // System.out.println(i);
+                // System.out.println(moves[row][i].getColor());
+
+            }
+
+            for(int i = column+1; i < 9 ; i++)// horizontal (right to left)
+            {
+                if(moves[row][i].getColor() == this.getColor())
+                {
+                    moves[row][i-1].setColor(this.getColor());
+                    System.out.println(i);
+
+                    System.out.println("right to left");   
+                }
+            }
+
+            for(int i = 1; i < row; i++)// vertical(down to up)
+            {
+                if(moves[i][column].getColor() == this.getColor())
+                {
+                    moves[i+1][column].setColor(this.getColor());
+                }
+            }
+
+            for(int i = row+1; i < 9; i++)// vertical(up to down)
+            {
+                if(moves[i][column].getColor() == this.getColor())
+                {
+                    moves[i-1][column].setColor(this.getColor());
+                }
+            }
+
             
         }
 
@@ -130,21 +266,20 @@ public class Main extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
         boolean pass = false;
-        int i = rand.nextInt(63);
-		//label.setText(label.getText()+".");
-	    button1.setBackground( new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
-        gridPanel.repaint();
-
+        int i = rand.nextInt(7);
+        int j = rand.nextInt(7);
+        
         while(pass==false)
         {
-            if(moves[i].first_time == false)
+            if(moves[i][j].first_time == false)
             {
-                moves[i].makeMove();
-                i = rand.nextInt(63);
+                moves[i][j].makeMove();
+                i = rand.nextInt(7);
+                j = rand.nextInt(7);
             }
             else
             {
-                moves[i].makeMove();
+                moves[i][j].makeMove();
                 pass = true;
             } 
         }
