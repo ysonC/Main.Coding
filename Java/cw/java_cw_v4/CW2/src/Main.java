@@ -93,7 +93,6 @@ public class Main extends JFrame implements ActionListener
 
     public class Pieces extends JButton implements ActionListener 
     {
-        boolean first_time = true;
         boolean lock = false;
         Color color;
         int row, column;
@@ -108,7 +107,7 @@ public class Main extends JFrame implements ActionListener
         public Pieces(Boolean garbage)
         {
             addActionListener(this);
-            first_time = false;
+            lockPiece();
         }
 
         public void lockPiece()
@@ -146,9 +145,8 @@ public class Main extends JFrame implements ActionListener
 
         public void makeMove()
         {
-            if (first_time)
+            if(getLock() == false)
             {
-                first_time = false;
                 if(flag == white)
                 {
                     setColor(Color.WHITE);
@@ -161,6 +159,7 @@ public class Main extends JFrame implements ActionListener
                     turnLabel.setText("White Turn");
                     flag = white;
                 }
+                lockPiece();
             }
         }
 
@@ -175,8 +174,19 @@ public class Main extends JFrame implements ActionListener
                 cnt++;
             if (moves[row-1][column].getColor() == Color.GREEN)
                 cnt++;
-            
-            System.out.println("cnt = " + cnt);
+
+            /*
+            if (moves[row+1][column+1].getColor() == Color.GREEN)
+                cnt++;
+            if (moves[row+1][column-1].getColor() == Color.GREEN)
+                cnt++;
+            if (moves[row-1][column+1].getColor() == Color.GREEN)
+                cnt++;
+            if (moves[row-1][column-1].getColor() == Color.GREEN)
+                cnt++;
+            */
+
+            //System.out.println("cnt = " + cnt);
             if (cnt < 4 )return true;
             else return false;
         }
@@ -199,37 +209,29 @@ public class Main extends JFrame implements ActionListener
             else return true;
         }
 
-        public void actionPerformed(ActionEvent e)
+        public boolean ifPass()
         {
             Color tmp = null;
             if (flag == white) tmp = Color.WHITE;
             else if (flag == black) tmp = Color.BLACK;
 
-            if (moveAble(tmp) && besideOne()) 
-            {
-                makeMove();
-                findSameColor();     
-            }
-            System.out.println("current color : " + this.getColor());            
-            System.out.println(getArray());
+            if(moveAble(tmp) && besideOne() && getLock() == false) return true;
 
+            else return false;
         }
 
         public void findSameColor()
         {
-            for(int i = 1; i < column ; i++) // horizontal(left to right)
+            for(int i = 1; i < column; i++) // horizontal(left to right)
             {   
                 if(moves[row][i].getColor() == this.getColor())
                 {
                     moves[row][i+1].setColor(this.getColor());
                     System.out.println("left to right");
                 }
-                // System.out.println(i);
-                // System.out.println(moves[row][i].getColor());
-
             }
 
-            for(int i = column+1; i < 9 ; i++)// horizontal (right to left)
+            for(int i = 8; i > column; i--)// horizontal (right to left)
             {
                 if(moves[row][i].getColor() == this.getColor())
                 {
@@ -245,20 +247,104 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][column].getColor() == this.getColor())
                 {
                     moves[i+1][column].setColor(this.getColor());
+                    System.out.println("down to up");   
+
                 }
             }
 
-            for(int i = row+1; i < 9; i++)// vertical(up to down)
+            for(int i = 8; i > row; i--)// vertical(up to down)
             {
                 if(moves[i][column].getColor() == this.getColor())
                 {
                     moves[i-1][column].setColor(this.getColor());
+                    System.out.println("up to down");   
+
                 }
             }
-
-            
         }
 
+        public void findSameColorD1()//down left
+        {
+            if(moves[row+1][column-1].getColor() == moves[row][column].getColor()) return;
+            for(int i = row+1, j = column-1; i < 9 ; i++,j-- )//down left
+            {
+                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == this.getColor())
+                {
+                    moves[i-1][j+1].setColor(this.getColor());
+                    //System.out.println("i : " + i + " j : " + j);
+                    findSameColorD1();
+                }
+            }
+            return;
+        }
+
+        public void findSameColorD2()//up left
+        {
+            if(moves[row-1][column+1].getColor() == moves[row][column].getColor()) return;
+            for(int i = row-1, j = column+1; i < 9 ; i--,j++ )//down left
+            {
+                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == this.getColor())
+                {
+                    moves[i+1][j-1].setColor(this.getColor());
+                    //System.out.println("i : " + i + " j : " + j);
+                    findSameColorD2();
+                }
+            }
+            return;
+        }
+
+        public void findSameColorD3()//down right
+        {
+            if(moves[row+1][column+1].getColor() == moves[row][column].getColor()) return;
+            for(int i = row+1, j = column+1; i < 9 ; i++,j++ )//down left
+            {
+                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == this.getColor())
+                {
+                    moves[i-1][j-1].setColor(this.getColor());
+                    //System.out.println("i : " + i + " j : " + j);
+                    findSameColorD3();
+                }
+            }
+            return;
+        }
+
+        public void findSameColorD4()//up left
+        {
+            if(moves[row-1][column-1].getColor() == moves[row][column].getColor()) return;
+            for(int i = row-1, j = column-1; i < 9 ; i--,j-- )//down left
+            {
+                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == this.getColor())
+                {
+                    moves[i+1][j+1].setColor(this.getColor());
+                    //System.out.println("i : " + i + " j : " + j);
+                    findSameColorD4();
+                }
+            }
+            return;
+        }
+
+        public void findSameColorDiagonal()
+        {
+            findSameColorD1();  
+            findSameColorD2();
+            findSameColorD3();
+            findSameColorD4();
+        }
+
+        public void actionPerformed(ActionEvent e)
+        {
+            if (ifPass()) 
+            {
+                makeMove();
+                findSameColor();   
+                findSameColorDiagonal();
+            }
+            System.out.println("current color : " + this.getColor() + " array : " + getArray() + " lock : " + getLock());
+        }
 
     }
 
@@ -266,20 +352,22 @@ public class Main extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
         boolean pass = false;
-        int i = rand.nextInt(7);
-        int j = rand.nextInt(7);
+        int i = rand.nextInt(7)+ 1;
+        int j = rand.nextInt(7)+1;
         
         while(pass==false)
         {
-            if(moves[i][j].first_time == false)
+            if(moves[i][j].ifPass() == false)
             {
-                moves[i][j].makeMove();
-                i = rand.nextInt(7);
-                j = rand.nextInt(7);
+                //moves[i][j].makeMove();
+                i = rand.nextInt(7)+1;
+                j = rand.nextInt(7)+1;
             }
-            else
+            else if (moves[i][j].ifPass())
             {
                 moves[i][j].makeMove();
+                moves[i][j].findSameColor();;
+                System.out.println(moves[i][j].getArray());
                 pass = true;
             } 
         }
