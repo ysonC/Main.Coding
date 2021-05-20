@@ -175,7 +175,7 @@ public class Main extends JFrame implements ActionListener
             if (moves[row-1][column].getColor() == Color.GREEN)
                 cnt++;
 
-            /*
+           
             if (moves[row+1][column+1].getColor() == Color.GREEN)
                 cnt++;
             if (moves[row+1][column-1].getColor() == Color.GREEN)
@@ -184,10 +184,10 @@ public class Main extends JFrame implements ActionListener
                 cnt++;
             if (moves[row-1][column-1].getColor() == Color.GREEN)
                 cnt++;
-            */
+            
 
             //System.out.println("cnt = " + cnt);
-            if (cnt < 4 )return true;
+            if (cnt < 8 )return true;
             else return false;
         }
 
@@ -220,47 +220,74 @@ public class Main extends JFrame implements ActionListener
             else return false;
         }
 
-        public void findSameColor()
+        public void findSameColor1()
         {
-            for(int i = 1; i < column; i++) // horizontal(left to right)
+            if(moves[row][column+1].getColor() == moves[row][column].getColor()) return;
+            for(int i = column+1; i < 9; i++) // horizontal(left to right)
             {   
-                if(moves[row][i].getColor() == this.getColor())
-                {
-                    moves[row][i+1].setColor(this.getColor());
-                    System.out.println("left to right");
-                }
-            }
-
-            for(int i = 8; i > column; i--)// horizontal (right to left)
-            {
+                if(moves[row][i].getColor() == Color.GREEN) return;
                 if(moves[row][i].getColor() == this.getColor())
                 {
                     moves[row][i-1].setColor(this.getColor());
-                    System.out.println(i);
-
-                    System.out.println("right to left");   
+                    System.out.println("left to right");
+                    findSameColor1();
                 }
             }
 
-            for(int i = 1; i < row; i++)// vertical(down to up)
+        }
+        public void findSameColor2()
+        {
+            if(moves[row][column-1].getColor() == moves[row][column].getColor()) return;
+            for(int i = column-1; i < 9; i--)// horizontal (right to left)
             {
+                if(moves[row][i].getColor() == Color.GREEN) return;
+                if(moves[row][i].getColor() == this.getColor())
+                {
+                    moves[row][i+1].setColor(this.getColor());
+                    System.out.println(i);
+                    System.out.println("right to left");
+                    findSameColor2();
+                }   
+            }
+        }
+    
+        public void findSameColor3()
+        {
+            if(moves[row-1][column].getColor() == moves[row][column].getColor()) return;
+            for(int i = row-1; i < 9; i--)// vertical(down to up)
+            {
+                if(moves[i][column].getColor() == Color.GREEN) return;
                 if(moves[i][column].getColor() == this.getColor())
                 {
                     moves[i+1][column].setColor(this.getColor());
-                    System.out.println("down to up");   
-
+                    System.out.println("down to up");  
+                    findSameColor3(); 
                 }
             }
 
-            for(int i = 8; i > row; i--)// vertical(up to down)
+        }
+
+        public void findSameColor4()
+        {
+            if(moves[row+1][column].getColor() == moves[row][column].getColor()) return;
+            for(int i = row+1; i <9; i++)// vertical(up to down)
             {
+                if(moves[i][column].getColor() == Color.GREEN) return;
                 if(moves[i][column].getColor() == this.getColor())
                 {
                     moves[i-1][column].setColor(this.getColor());
                     System.out.println("up to down");   
-
+                    findSameColor4();
                 }
             }
+        }
+
+        public void findSameColorHorizontal()
+        {
+            findSameColor1();
+            findSameColor2();
+            findSameColor3();
+            findSameColor4();
         }
 
         public void findSameColorD1()//down left
@@ -268,7 +295,7 @@ public class Main extends JFrame implements ActionListener
             if(moves[row+1][column-1].getColor() == moves[row][column].getColor()) return;
             for(int i = row+1, j = column-1; i < 9 ; i++,j-- )//down left
             {
-                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == Color.GREEN) return;
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i-1][j+1].setColor(this.getColor());
@@ -284,7 +311,7 @@ public class Main extends JFrame implements ActionListener
             if(moves[row-1][column+1].getColor() == moves[row][column].getColor()) return;
             for(int i = row-1, j = column+1; i < 9 ; i--,j++ )//down left
             {
-                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == Color.GREEN) return;
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i+1][j-1].setColor(this.getColor());
@@ -300,7 +327,7 @@ public class Main extends JFrame implements ActionListener
             if(moves[row+1][column+1].getColor() == moves[row][column].getColor()) return;
             for(int i = row+1, j = column+1; i < 9 ; i++,j++ )//down left
             {
-                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == Color.GREEN) return;
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i-1][j-1].setColor(this.getColor());
@@ -316,7 +343,7 @@ public class Main extends JFrame implements ActionListener
             if(moves[row-1][column-1].getColor() == moves[row][column].getColor()) return;
             for(int i = row-1, j = column-1; i < 9 ; i--,j-- )//down left
             {
-                if(moves[i][j].getColor() == Color.GREEN) break;
+                if(moves[i][j].getColor() == Color.GREEN) return;
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i+1][j+1].setColor(this.getColor());
@@ -335,13 +362,20 @@ public class Main extends JFrame implements ActionListener
             findSameColorD4();
         }
 
+        public void combineFind()
+        {
+            findSameColorHorizontal();
+            findSameColorDiagonal();
+        }
+
         public void actionPerformed(ActionEvent e)
         {
             if (ifPass()) 
             {
                 makeMove();
-                findSameColor();   
-                findSameColorDiagonal();
+                //findSameColorHorizontal();   
+                //findSameColorDiagonal();
+                combineFind();
             }
             System.out.println("current color : " + this.getColor() + " array : " + getArray() + " lock : " + getLock());
         }
