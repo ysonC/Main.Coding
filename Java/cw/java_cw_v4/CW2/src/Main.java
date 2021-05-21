@@ -96,24 +96,38 @@ public class Main extends JFrame implements ActionListener
         boolean lock = false;
         Color color;
         int row, column;
+        int placeAble;
         
         public Pieces()
         {
             addActionListener(this);
             color = Color.GREEN;
             lock = false;
+            placeAble = 0;
         }
 
         public Pieces(Boolean garbage)
         {
             addActionListener(this);
-            lockPiece();
+            lockPiece(true);
+            placeAble = 1;
         }
 
-        public void lockPiece()
+        public void addPlaceAble()
         {
-            lock = true;
+            placeAble++;
         }
+
+        public int getPlaceAble()
+        {
+            return placeAble;
+        }
+
+        public void lockPiece(boolean setLock)
+        {
+            lock = setLock;
+        }
+
         public boolean getLock()
         {
             return lock;
@@ -142,6 +156,43 @@ public class Main extends JFrame implements ActionListener
             return color;
         }
 
+        public int getTotalWhite(int totalWhite)
+        {
+            for (int i = 0; i < 10; i++)
+            {       
+                for (int j = 0; j < 10; j++)
+                {
+                    if(moves[i][j].getColor() == Color.WHITE)
+                    {
+                        totalWhite++;
+                    }
+                }
+            }
+            return totalWhite;
+        }
+
+        public int getTotalBlack(int totalBlack)
+        {
+            for (int i = 0; i < 10; i++)
+            {       
+                for (int j = 0; j < 10; j++)
+                {
+                    if(moves[i][j].getColor() == Color.BLACK)
+                    {
+                        totalBlack++;
+                    }
+                }
+            }
+            return totalBlack;
+        }
+
+        public void packGetTotal()
+        {
+            int totalWhite = 0, totalBlack = 0;
+            
+            System.out.println("White : " + getTotalWhite(totalWhite) + " Black : " + getTotalBlack(totalBlack));
+        }
+
 
         public void makeMove()
         {
@@ -159,10 +210,28 @@ public class Main extends JFrame implements ActionListener
                     turnLabel.setText("White Turn");
                     flag = white;
                 }
-                lockPiece();
+                lockPiece(true);
             }
         }
 
+        public void reverseMove()
+        {
+            lockPiece(false);
+            if(flag == white)
+                {
+                    setColor(Color.GREEN);
+                    turnLabel.setText("Black Turn");
+                    flag = black;
+                }
+            else 
+                {
+                    setColor(Color.GREEN);
+                    turnLabel.setText("White Turn");
+                    flag = white;
+                }
+        }
+
+        /*
         public boolean besideOne()
         {
             int cnt =0;
@@ -209,14 +278,11 @@ public class Main extends JFrame implements ActionListener
             else return true;
         }
 
+        */
+
         public boolean ifPass()
         {
-            Color tmp = null;
-            if (flag == white) tmp = Color.WHITE;
-            else if (flag == black) tmp = Color.BLACK;
-
-            if(moveAble(tmp) && besideOne() && getLock() == false) return true;
-
+            if(getLock() == false) return true;
             else return false;
         }
 
@@ -229,6 +295,7 @@ public class Main extends JFrame implements ActionListener
                 if(moves[row][i].getColor() == this.getColor())
                 {
                     moves[row][i-1].setColor(this.getColor());
+                    addPlaceAble();
                     System.out.println("left to right");
                     findSameColor1();
                 }
@@ -244,7 +311,7 @@ public class Main extends JFrame implements ActionListener
                 if(moves[row][i].getColor() == this.getColor())
                 {
                     moves[row][i+1].setColor(this.getColor());
-                    System.out.println(i);
+                    addPlaceAble();
                     System.out.println("right to left");
                     findSameColor2();
                 }   
@@ -260,11 +327,11 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][column].getColor() == this.getColor())
                 {
                     moves[i+1][column].setColor(this.getColor());
+                    addPlaceAble();
                     System.out.println("down to up");  
                     findSameColor3(); 
                 }
             }
-
         }
 
         public void findSameColor4()
@@ -276,6 +343,7 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][column].getColor() == this.getColor())
                 {
                     moves[i-1][column].setColor(this.getColor());
+                    addPlaceAble();
                     System.out.println("up to down");   
                     findSameColor4();
                 }
@@ -298,7 +366,8 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][j].getColor() == Color.GREEN) return;
                 if(moves[i][j].getColor() == this.getColor())
                 {
-                    moves[i-1][j+1].setColor(this.getColor());
+                    moves[i-1][j+1].setColor(this.getColor());                    
+                    addPlaceAble();
                     //System.out.println("i : " + i + " j : " + j);
                     findSameColorD1();
                 }
@@ -315,6 +384,7 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i+1][j-1].setColor(this.getColor());
+                    addPlaceAble();
                     //System.out.println("i : " + i + " j : " + j);
                     findSameColorD2();
                 }
@@ -331,6 +401,7 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i-1][j-1].setColor(this.getColor());
+                    addPlaceAble();
                     //System.out.println("i : " + i + " j : " + j);
                     findSameColorD3();
                 }
@@ -347,6 +418,7 @@ public class Main extends JFrame implements ActionListener
                 if(moves[i][j].getColor() == this.getColor())
                 {
                     moves[i+1][j+1].setColor(this.getColor());
+                    addPlaceAble();
                     //System.out.println("i : " + i + " j : " + j);
                     findSameColorD4();
                 }
@@ -373,11 +445,12 @@ public class Main extends JFrame implements ActionListener
             if (ifPass()) 
             {
                 makeMove();
-                //findSameColorHorizontal();   
-                //findSameColorDiagonal();
                 combineFind();
+                if(getPlaceAble() == 0) reverseMove();
             }
-            System.out.println("current color : " + this.getColor() + " array : " + getArray() + " lock : " + getLock());
+            System.out.println("array : " + getArray() 
+                                + " lock : " + getLock() + " placeAble : " + getPlaceAble());
+            packGetTotal();
         }
 
     }
@@ -386,25 +459,35 @@ public class Main extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
         boolean pass = false;
-        int i = rand.nextInt(7)+ 1;
-        int j = rand.nextInt(7)+1;
+        int i = rand.nextInt(8)+1;
+        int j = rand.nextInt(8)+1;
         
         while(pass==false)
         {
-            if(moves[i][j].ifPass() == false)
-            {
-                //moves[i][j].makeMove();
-                i = rand.nextInt(7)+1;
-                j = rand.nextInt(7)+1;
-            }
-            else if (moves[i][j].ifPass())
+            if (moves[i][j].ifPass())
             {
                 moves[i][j].makeMove();
-                moves[i][j].findSameColor();;
+                moves[i][j].combineFind();
+                if(moves[i][j].getPlaceAble() == 0)
+                {
+                    moves[i][j].reverseMove();
+                    i = rand.nextInt(7)+1;
+                    j = rand.nextInt(7)+1;
+                    pass = false;
+                }
+                else
+                {
+                    pass = true;
+                }
                 System.out.println(moves[i][j].getArray());
-                pass = true;
+            }
+            else
+            {
+                i = rand.nextInt(8)+1;
+                j = rand.nextInt(8)+1;
             } 
         }
+        moves[0][0].packGetTotal();
 	}
 
     public static void main(String[] args)
