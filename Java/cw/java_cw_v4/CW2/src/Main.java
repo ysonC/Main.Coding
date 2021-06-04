@@ -1,4 +1,4 @@
-import java.awt.Color;
+    import java.awt.Color;
 import java.util.Random;
 import java.awt.*;
 import javax.swing.JButton;
